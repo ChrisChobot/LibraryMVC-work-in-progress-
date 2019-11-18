@@ -1,0 +1,41 @@
+﻿<h2>Create</h2>
+<form class="form-horizontal" name="frmAddMultimedia" ng-submit="createMultimedia(multimedia)" novalidate>
+    <h4>Create a new multimedia</h4>
+    <hr />
+
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Title</label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" name="Title" ng-model="multimedia.Title" ng-maxlength="255" required />
+            <span class="text-danger" ng-show="(frmAddMultimedia.Title.$touched || frmAddMultimedia.Title.$dirty) && frmAddMultimedia.Title.$invalid">
+                <span ng-show="frmAddMultimedia.Title.$error.required">Title is required</span>
+                <span ng-show="frmAddMultimedia.Title.$error.maxlength">Title must be less than or equal to 255</span>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Description</label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" name="Description" ng-model="multimedia.Description" ng-maxlength="5000" />
+            <span class="text-danger" ng-show="(frmAddMultimedia.Description.$touched || frmAddMultimedia.Description.$dirty) && frmAddMultimedia.Description.$invalid">
+                <span ng-show="frmAddMultimedia.Description.$error.maxlength">Description must be less than or equal to 5000</span>
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-lg-2 control-label">Author</label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" name="Author" ng-model="multimedia.Author" ng-maxlength="255" />
+            <span class="text-danger" ng-show="(frmAddMultimedia.Author.$touched || frmAddMultimedia.Author.$dirty) && frmAddMultimedia.Author.$invalid">
+                <span ng-show="frmAddMultimedia.Author.$error.maxlength">Author must be less than or equal to 255</span>
+            </span>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+            <input type="submit" class="btn btn-success" value="Create" ng-disabled="frmAddMultimedia.$invalid" />
+            <a href="#/" class="btn btn-default">Cancel</a>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,56 @@
+﻿<h2> Multimedia listing: </h2>
+<p>
+    <a href="#/addmultimedia" class="btn btn-primary">Create new</a>
+</p>
+
+<div class="row">  
+    <div class="col-lg-6">
+        <div class="form-group pull-right">
+            Show
+            <label>
+                <select ng-model="selectedClass" ng-options="x for x in classes">
+                </select>
+            </label>
+            Entries
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>Lector</th>
+            <th>Isbn</th>
+            <th>Lenght</th>
+            <th>Over eightteen years</th>
+            <th>Number</th>
+            <th>Gift</th>
+            <th>Gift Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="i in multimedia | filterByClass:selectedClass">
+            
+            <td>{{i.Title}}</td>
+            <td>{{i.Description}}</td>
+            <td>{{i.Author}}</td>
+            <td>{{i.Publisher}}</td>
+            <td>{{i.Lector}}</td>
+            <td>{{i.Isbn}}</td>
+            <td>{{i.Lenght}}</td>
+            <td>{{i.OverEightteenYears}}</td>
+            <td>{{i.Number}}</td>
+            <td>{{i.Gift}}</td>
+            <td>{{i.GiftName}}</td>
+        </tr>
+        <tr ng-if="!multimedia || multimedia.length == 0">
+            <td colspan="4" style="text-align: center">
+                No user data to display
+            </td>
+        </tr>
+    </tbody>
+</table>
