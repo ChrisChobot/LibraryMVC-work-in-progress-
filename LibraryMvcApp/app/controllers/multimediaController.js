@@ -23,6 +23,9 @@
             }
         }])
         .controller('multimediaAddController', ['$scope', '$location', 'dataService', function ($scope, $location, dataService) {
+
+            $scope.classes = ["Audio book", "Game", "Music record", "Book", "Magazine"];
+
             $scope.createMultimedia = function (multimedia) {
                 dataService.addMultimedia(multimedia).then(function () {
                     $location.path('/');

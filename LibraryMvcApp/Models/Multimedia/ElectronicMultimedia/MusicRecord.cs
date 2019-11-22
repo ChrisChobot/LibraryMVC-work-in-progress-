@@ -5,10 +5,9 @@ using System.Web;
 
 namespace LibraryMvcApp.Models
 {
-    public class AudioBook : ElectronicMultimedia
+    public class MusicRecord: ElectronicMultimedia
     {
-        string Lector;
-        string Isbn;
-        float Lenght;
+        public float Lenght;
+
     }
 }

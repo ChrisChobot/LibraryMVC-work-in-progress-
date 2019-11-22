@@ -6,5 +6,6 @@ namespace LibraryMvcApp.Services
     public interface IMultimediaServices
     {
         List<Multimedia> GetAllMultimedia();
+        void AddObject(Multimedia multimedia);
     }
 }

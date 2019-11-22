@@ -5,9 +5,9 @@ using System.Web;
 
 namespace LibraryMvcApp.Models
 {
-    public class MusicRecord: ElectronicMultimedia
+    public abstract class WrittenMultimedia : Multimedia
     {
-        float Lenght;
-
+        string TableOfContents;
+        int PagesCount;
     }
 }

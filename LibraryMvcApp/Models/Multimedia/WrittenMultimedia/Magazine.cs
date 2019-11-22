@@ -10,5 +10,10 @@ namespace LibraryMvcApp.Models
         string Number;
         bool Gift;
         string GiftName;
+
+        //public override void AddToDb()
+        //{
+            
+        //}
     }
 }

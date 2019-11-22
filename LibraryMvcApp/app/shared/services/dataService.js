@@ -27,7 +27,7 @@
                 //}
 
                 console.log(
-                    $http.post('/Multimedia/Create', { obje: JSON.stringify(multimedia) })
+                    $http.post('/Multimedia/Create', { newMultimedia: JSON.stringify(multimedia) })
                 .then(function () {
                     deferred.resolve();
                 }, function () {

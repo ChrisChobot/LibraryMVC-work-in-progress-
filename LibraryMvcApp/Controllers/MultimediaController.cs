@@ -2,9 +2,11 @@
 using LibraryMvcApp.Models;
 using LibraryMvcApp.Services;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -27,9 +29,31 @@ namespace LibraryMvcApp.Controllers
         }
         
         [HttpPost]
-        public JsonResult Create([FromBody]string obje)
+        public JsonResult Create([FromBody]string newMultimedia)
         {
-           // dynamic deserializedData = JsonConvert.DeserializeObject<dynamic>(obje);
+            JObject deserializedData = JsonConvert.DeserializeObject<JObject>(newMultimedia);
+            
+            switch (deserializedData.Property("SelectedClass").Value.ToString())
+            {
+                case "Audio book":
+                    _service.AddObject(JsonConvert.DeserializeObject<AudioBook>(newMultimedia));
+                    break;
+                case "Game":
+                    _service.AddObject(JsonConvert.DeserializeObject<Game>(newMultimedia));
+                    break;
+                case "Music record":
+                    _service.AddObject(JsonConvert.DeserializeObject<MusicRecord>(newMultimedia));
+                    break;
+                case "Book":
+                    _service.AddObject(JsonConvert.DeserializeObject<Book>(newMultimedia));
+                    break;
+                case "Magazine":
+                    _service.AddObject(JsonConvert.DeserializeObject<Magazine>(newMultimedia));
+                    break;
+                default:
+                    break;
+            }
+
             return Json(null);
         }
 
