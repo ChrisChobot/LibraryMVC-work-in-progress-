@@ -5,8 +5,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -25,9 +28,16 @@ namespace LibraryMvcApp.Controllers
 
         public JsonResult Index()
         {
-            return Json(_service.GetAllMultimedia(),JsonRequestBehavior.AllowGet);
+            return Json(_service.GetAllMultimedia(), JsonRequestBehavior.AllowGet);
         }
-        
+
+        [HttpPost]
+        public JsonResult Details(int id, string className)
+        {
+            var multimedia = _service.GetObject(id,className);
+            return Json(multimedia, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult Create([FromBody]string newMultimedia)
         {
@@ -57,55 +67,70 @@ namespace LibraryMvcApp.Controllers
             return Json(null);
         }
 
-        //[HttpPost]
-        //public JsonResult Create(JsonResult obje)
-        //{
-        //   // dynamic deserializedData = JsonConvert.DeserializeObject<dynamic>(obje);
-        //    return Json(null);
-        //}
-
-        // GET: Multimedia/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Multimedia/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public JsonResult UploadFile()
         {
-            try
-            {
-                // TODO: Add update logic here
+            string fileName = MultimediaServices.NextPossibleFilename();
+            bool flag = false;
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (Request.Files != null && Request.Files.Count > 0)
             {
-                return View();
+                var file = Request.Files[0];
+
+                try
+                {
+                    file.SaveAs(Path.Combine(Server.MapPath("~/Images"), fileName));
+                    flag = true;
+                }
+                catch (Exception)
+                {
+                    flag = false;
+                }
             }
+
+            return new JsonResult { Data = new {FileName = fileName, Status = flag } };
         }
 
-        // GET: Multimedia/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Multimedia/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public JsonResult Edit([FromBody] string updatedMultimedia)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            JObject deserializedData = JsonConvert.DeserializeObject<JObject>(updatedMultimedia);
 
-                return RedirectToAction("Index");
-            }
-            catch
+            switch (deserializedData.Property("ClassName").Value.ToString())
             {
-                return View();
+                case "AudioBook":
+                    _service.EditObject(JsonConvert.DeserializeObject<AudioBook>(updatedMultimedia));
+                    break;
+                case "Game":
+                    _service.EditObject(JsonConvert.DeserializeObject<Game>(updatedMultimedia));
+                    break;
+                case "MusicRecord":
+                    _service.EditObject(JsonConvert.DeserializeObject<MusicRecord>(updatedMultimedia));
+                    break;
+                case "Book":
+                    _service.EditObject(JsonConvert.DeserializeObject<Book>(updatedMultimedia));
+                    break;
+                case "Magazine":
+                    _service.EditObject(JsonConvert.DeserializeObject<Magazine>(updatedMultimedia));
+                    break;
+                default:
+                    break;
             }
+            return Json(null);
+        }
+
+        [HttpPost]
+        public JsonResult Delete([FromBody] int id, string className)
+        {
+            _service.DeleteObject(id, className);
+            return Json(null);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteCoverPhoto([FromBody] int id, string className)
+        {
+            _service.DeleteCoverPhoto(id, className);
+            return Json(null);
         }
     }
 }

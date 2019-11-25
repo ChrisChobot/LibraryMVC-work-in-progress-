@@ -8,6 +8,5 @@ namespace LibraryMvcApp.Models
     public class MusicRecord: ElectronicMultimedia
     {
         public float Lenght;
-
     }
 }

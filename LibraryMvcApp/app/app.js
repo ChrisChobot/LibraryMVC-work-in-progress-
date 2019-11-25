@@ -66,6 +66,10 @@
                 controller: 'multimediaAddController',
                 templateUrl: '/app/templates/multimediaAdd.html'
             })
+            .when('/editmultimedia/:className/:id', {
+                controller: 'multimediaEditController',
+                templateUrl: '/app/templates/multimediaEdit.html'
+            })
             .otherwise({ redirectTo: '/' });
     }]);
 })();

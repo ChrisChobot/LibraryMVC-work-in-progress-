@@ -8,7 +8,7 @@
         <div class="form-group pull-right">
             Show
             <label>
-                <select ng-model="selectedClass" ng-options="x for x in classes">
+                <select ng-init="selectedClass = displayClasses[0]"   ng-model="selectedClass" ng-options="x for x in displayClasses">
                 </select>
             </label>
             Entries
@@ -17,35 +17,95 @@
 </div>
 
 <table class="table table-bordered">
-    <thead>
+    <thead> <!--Column names-->
         <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Author</th>
-            <th>Publisher</th>
-            <th>Lector</th>
-            <th>Isbn</th>
-            <th>Lenght</th>
-            <th>Over eightteen years</th>
-            <th>Number</th>
-            <th>Gift</th>
-            <th>Gift Name</th>
+            <th ng-click="sortBy('Title')">
+                Title
+                <span class="glyphicon" ng-show="sortColumn=='Title'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-click="sortBy('Description')">
+                Description
+                <span class="glyphicon" ng-show="sortColumn=='Description'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-click="sortBy('Author')">
+                Author
+                <span class="glyphicon" ng-show="sortColumn=='Author'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-click="sortBy('Publisher')">
+                Publisher
+                <span class="glyphicon" ng-show="sortColumn=='Publisher'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th>
+                Cover
+            </th>
+            <th ng-if=" selectedClass == 'Audio book'" ng-click="sortBy('Lector')">
+                Lector
+                <span class="glyphicon" ng-show="sortColumn=='Lector'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-if="selectedClass == 'Book' || selectedClass == 'Audio book'" ng-click="sortBy('ISBN')">
+                ISBN
+                <span class="glyphicon" ng-show="sortColumn=='ISBN'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-if="selectedClass == 'Audio book' || selectedClass == 'Music record'" ng-click="sortBy('Lenght')">
+                Lenght
+                <span class="glyphicon" ng-show="sortColumn=='Lenght'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-if="selectedClass == 'Audio book' || selectedClass == 'Game' || selectedClass == 'Music record'" ng-click="sortBy('Size')">
+                Size
+                <span class="glyphicon" ng-show="sortColumn=='Size'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-if="selectedClass == 'Game'" ng-click="sortBy('Over eightteen years')">
+                Over eightteen years
+                <span class="glyphicon" ng-show="sortColumn=='Over eightteen years'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-if="selectedClass == 'Magazine'" ng-click="sortBy('Number')">
+                Number
+                <span class="glyphicon" ng-show="sortColumn=='Number'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-if="selectedClass == 'Magazine'" ng-click="sortBy('Gift')">
+                Gift
+                <span class="glyphicon" ng-show="sortColumn=='Gift'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-if="selectedClass == 'Magazine'" ng-click="sortBy('Gift Name')">
+                Gift Gift Name
+                <span class="glyphicon" ng-show="sortColumn=='Gift Name'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-if="selectedClass == 'Book' ||selectedClass == 'Magazine'" ng-click="sortBy('Table of contents')">
+                Table of contents
+                <span class="glyphicon" ng-show="sortColumn=='Table of contents'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th ng-if="selectedClass == 'Book' || selectedClass == 'Magazine'" ng-click="sortBy('Pages count')">
+                Pages count
+                <span class="glyphicon" ng-show="sortColumn=='Pages count'" ng-class="{'glyphicon-triangle-top': !reverse, 'glyphicon-triangle-bottom': reverse}"></span>
+            </th>
+            <th>
+                Options
+            </th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="i in multimedia | filterByClass:selectedClass">
-            
+        <tr ng-repeat="i in multimedia  | filterByClass:realClasses[ displayClasses.indexOf(selectedClass)] | orderBy: sortColumn: reverse ">
+
             <td>{{i.Title}}</td>
             <td>{{i.Description}}</td>
             <td>{{i.Author}}</td>
             <td>{{i.Publisher}}</td>
-            <td>{{i.Lector}}</td>
-            <td>{{i.Isbn}}</td>
-            <td>{{i.Lenght}}</td>
-            <td>{{i.OverEightteenYears}}</td>
-            <td>{{i.Number}}</td>
-            <td>{{i.Gift}}</td>
-            <td>{{i.GiftName}}</td>
+            <td ng-if="i.CoverPhoto"> <img ng-src="Images/{{i.CoverPhoto}}" width="160px" height="120px"> </td>
+            <td ng-if="!i.CoverPhoto">no image </td>
+            <td ng-if="selectedClass == 'Audio book'">{{i.Lector}}</td>
+            <td ng-if="selectedClass == 'Book' || selectedClass == 'Audio book'">{{i.Isbn}}</td>
+            <td ng-if="selectedClass == 'Audio book' || selectedClass == 'Music record'">{{i.Lenght}}</td>
+            <td ng-if="selectedClass == 'Audio book' || selectedClass == 'Game' || selectedClass == 'Music record'">{{i.Size}}</td>
+            <td ng-if="selectedClass == 'Game'">{{i.OverEightteenYears}}</td>
+            <td ng-if="selectedClass == 'Magazine'">{{i.Number}}</td>
+            <td ng-if="selectedClass == 'Magazine'">{{i.Gift}}</td>
+            <td ng-if="selectedClass == 'Magazine'">{{i.GiftName}}</td>
+            <td ng-if="selectedClass == 'Book' ||selectedClass == 'Magazine'">{{i.TableOfContents}}</td>
+            <td ng-if="selectedClass == 'Book' || selectedClass == 'Magazine'">{{i.PagesCount}}</td>
+            <td>
+                <a href="#/editmultimedia/{{i.ClassName}}/{{i.MultimediaID}}">Edit</a> |
+                <a href="" ng-click="deleteUser(i.MultimediaID,i.ClassName)">Delete</a>
+            </td>
         </tr>
         <tr ng-if="!multimedia || multimedia.length == 0">
             <td colspan="4" style="text-align: center">

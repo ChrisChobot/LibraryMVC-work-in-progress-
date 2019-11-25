@@ -1,0 +1,191 @@
+﻿<h2>Edit data</h2>
+<form class="form-horizontal" name="frmEditMultimedia" ng-submit="updateMultimedia(multimedia)" novalidate>
+    <h4>Update current Multimedia</h4>
+    <hr />
+
+
+    <div>
+        <!--forms-->
+        <!--All multimedias-->
+        <div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Title</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="Title" ng-model="multimedia.Title" ng-maxlength="255" required />
+                    <span class="text-danger" ng-show="(frmEditMultimedia.Title.$touched || frmEditMultimedia.Title.$dirty) && frmEditMultimedia.Title.$invalid">
+                        <span ng-show="frmEditMultimedia.Title.$error.required">Title is required</span>
+                        <span ng-show="frmEditMultimedia.Title.$error.maxlength">Title must be less than or equal to 255</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Description</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="Description" ng-model="multimedia.Description" ng-maxlength="5000" />
+                    <span class="text-danger" ng-show="(frmEditMultimedia.Description.$touched || frmEditMultimedia.Description.$dirty) && frmEditMultimedia.Description.$invalid">
+                        <span ng-show="frmEditMultimedia.Description.$error.maxlength">Description must be less than or equal to 5000</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Author</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="Author" ng-model="multimedia.Author" ng-maxlength="255" />
+                    <span class="text-danger" ng-show="(frmEditMultimedia.Author.$touched || frmEditMultimedia.Author.$dirty) && frmEditMultimedia.Author.$invalid">
+                        <span ng-show="frmEditMultimedia.Author.$error.maxlength">Author must be less than or equal to 255</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Publisher</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="Publisher" ng-model="multimedia.Publisher" ng-maxlength="255" />
+                    <span class="text-danger" ng-show="(frmEditMultimedia.Publisher.$touched || frmEditMultimedia.Publisher.$dirty) && frmEditMultimedia.Publisher.$invalid">
+                        <span ng-show="frmEditMultimedia.Publisher.$error.maxlength">Publisher must be less than or equal to 255</span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Cover photo</label>
+                <div class="col-lg-10">
+                    <div>
+                        <input type="file" name="CoverPhoto" value="Upload File" accept="image/*" onchange="angular.element(this).scope().selectFileforUpload(this.files)"  />
+                        <span class="error" ng-show="(frmEditMultimedia.CoverPhoto.$dirty) ">Image error !</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--electronic multimedia-->
+        <div>
+            <div ng-if="multimedia.ClassName == 'AudioBook' || multimedia.ClassName == 'Game' || multimedia.ClassName == 'MusicRecord'" class="form-group">
+                <label class="col-lg-2 control-label">Size</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="Size" ng-model="multimedia.Size" ng-maxlength="255" />
+                    <span class="text-danger" ng-show="(frmEditMultimedia.Size.$touched || frmEditMultimedia.Size.$dirty) && frmEditMultimedia.Size.$invalid">
+                        <span ng-show="frmEditMultimedia.Size.$error.maxlength">Size must be less than or equal to 255</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div ng-if="multimedia.ClassName == 'Book' || multimedia.ClassName == 'AudioBook'" class="form-group">
+            <label class="col-lg-2 control-label">ISBN</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="ISBN" ng-model="multimedia.ISBN" ng-maxlength="255" />
+                <span class="text-danger" ng-show="(frmEditMultimedia.ISBN.$touched || frmEditMultimedia.ISBN.$dirty) && frmEditMultimedia.ISBN.$invalid">
+                    <span ng-show="frmEditMultimedia.ISBN.$error.maxlength">ISBN must be less than or equal to 255</span>
+                </span>
+            </div>
+        </div>
+        <div ng-if="multimedia.ClassName == 'AudioBook'" class="form-group">
+            <label class="col-lg-2 control-label">Lector</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="Lector" ng-model="multimedia.Lector" ng-maxlength="255" />
+                <span class="text-danger" ng-show="(frmAddMultimedia.Lector.$touched || frmAddMultimedia.Lector.$dirty) && frmAddMultimedia.Lector.$invalid">
+                    <span ng-show="frmAddMultimedia.Lector.$error.maxlength">Lector must be less than or equal to 255</span>
+                </span>
+            </div>
+        </div>
+        <div ng-if="multimedia.ClassName == 'AudioBook' || multimedia.ClassName == 'MusicRecord'" class="form-group">
+            <label class="col-lg-2 control-label">Lenght</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="Lenght" ng-model="multimedia.Lenght" ng-maxlength="255" />
+                <span class="text-danger" ng-show="(frmEditMultimedia.Lenght.$touched || frmEditMultimedia.Lenght.$dirty) && frmEditMultimedia.Lenght.$invalid">
+                    <span ng-show="frmEditMultimedia.Lenght.$error.maxlength">Lenght must be less than or equal to 255</span>
+                </span>
+            </div>
+        </div>
+        <div ng-if="multimedia.ClassName == 'Game'" class="form-group">
+            <label class="col-lg-2 control-label">OverEightteenYears</label>
+            <div class="col-lg-10">
+                <input type="text" class="form-control" name="Over eightteen years" ng-model="multimedia.OverEightteenYears" ng-maxlength="1" />
+                <span class="text-danger" ng-show="(frmEditMultimedia.OverEightteenYears.$touched || frmEditMultimedia.OverEightteenYears.$dirty) && frmEditMultimedia.OverEightteenYears.$invalid">
+                    <span ng-show="frmEditMultimedia.OverEightteenYears.$error.maxlength">Over eightteen years must be less than or equal to 1</span>
+                </span>
+            </div>
+        </div>
+
+        <!--Magazine-->
+        <div>
+            <div ng-if="multimedia.ClassName == 'Magazine'" class="form-group">
+                <label class="col-lg-2 control-label">Number</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="Number" ng-model="multimedia.Number" ng-maxlength="25" />
+                    <span class="text-danger" ng-show="(frmEditMultimedia.Number.$touched || frmEditMultimedia.Number.$dirty) && frmEditMultimedia.Number.$invalid">
+                        <span ng-show="frmEditMultimedia.Number.$error.maxlength">Number must be less than or equal to 25</span>
+                    </span>
+                </div>
+            </div>
+            <div ng-if="multimedia.ClassName == 'Magazine'" class="form-group">
+                <label class="col-lg-2 control-label">Gift</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="Gift" ng-model="multimedia.Gift" ng-maxlength="255" />
+                    <span class="text-danger" ng-show="(frmEditMultimedia.Gift.$touched || frmEditMultimedia.Gift.$dirty) && frmEditMultimedia.Gift.$invalid">
+                        <span ng-show="frmEditMultimedia.Gift.$error.maxlength">Gift must be less than or equal to 255</span>
+                    </span>
+                </div>
+            </div>
+            <div ng-if="multimedia.ClassName == 'Magazine'" class="form-group">
+                <label class="col-lg-2 control-label">GiftName</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="Gift name" ng-model="multimedia.GiftName" ng-maxlength="255" />
+                    <span class="text-danger" ng-show="(frmEditMultimedia.GiftName.$touched || frmEditMultimedia.GiftName.$dirty) && frmEditMultimedia.GiftName.$invalid">
+                        <span ng-show="frmEditMultimedia.GiftName.$error.maxlength">Gift name must be less than or equal to 255</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!--Written multimedia-->
+        <div>
+            <div ng-if="multimedia.ClassName == 'Book' || multimedia.ClassName == 'Magazine'" class="form-group">
+                <label class="col-lg-2 control-label">PagesCount</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="Pages count" ng-model="multimedia.PagesCount" ng-maxlength="10" />
+                    <span class="text-danger" ng-show="(frmEditMultimedia.PagesCount.$touched || frmEditMultimedia.PagesCount.$dirty) && frmEditMultimedia.PagesCount.$invalid">
+                        <span ng-show="frmEditMultimedia.PagesCount.$error.maxlength">Pages count must number with less or equal digits than 10</span>
+                    </span>
+                </div>
+            </div>
+            <div ng-if="multimedia.ClassName == 'Book' || multimedia.ClassName == 'Magazine'" class="form-group">
+                <label class="col-lg-2 control-label">TableOfContents</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" name="Table of contents" ng-model="multimedia.TableOfContents" ng-maxlength="1500" />
+                    <span class="text-danger" ng-show="(frmEditMultimedia.TableOfContents.$touched || frmEditMultimedia.TableOfContents.$dirty) && frmEditMultimedia.TableOfContents.$invalid">
+                        <span ng-show="frmEditMultimedia.TableOfContents.$error.maxlength">Table of contents must be less than or equal to 1500</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-10">
+            <input type="submit" class="btn btn-success" value="Update" />
+            <a href="#/" class="btn btn-default">Cancel</a>
+        </div>
+    </div>
+</form>

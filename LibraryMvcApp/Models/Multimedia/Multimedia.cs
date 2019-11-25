@@ -17,14 +17,11 @@ namespace LibraryMvcApp.Models
         public string Description { get; set; }
         public string Author { get; set; }
         public string Publisher { get; set; }
-        public float Value { get; set; }
         public string CoverPhoto { get; set; }
 
         public Multimedia()
         {
             ClassName = this.GetType().Name;
         }
-
-       // public abstract void AddToDb();
     }
 }

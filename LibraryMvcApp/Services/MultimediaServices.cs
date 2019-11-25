@@ -2,7 +2,10 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -11,6 +14,7 @@ namespace LibraryMvcApp.Services
     public class MultimediaServices : IMultimediaServices
     {
         private MultimediaUsersDbContext _db;
+        private static readonly string _imagesDirectory = HttpContext.Current.Server.MapPath("~/Images");
 
         public MultimediaServices()
         {
@@ -86,8 +90,43 @@ namespace LibraryMvcApp.Services
             return list;
         }
 
-        public void AddObject(Multimedia multimedia)
+        public Multimedia GetObject(int id, string className)
         {
+            dynamic foundObject;
+
+            switch (className)
+            {
+                case "AudioBook":
+                    foundObject = _db.AudioBooks.FirstOrDefault((x) => x.MultimediaID == id);               
+                    break;
+                case "Game":
+                    foundObject = _db.Games.FirstOrDefault((x) => x.MultimediaID == id);
+                    break;
+                case "MusicRecord":
+                    foundObject = _db.MusicRecords.FirstOrDefault((x) => x.MultimediaID == id);
+                    break;
+                case "Book":
+                    foundObject = _db.Books.FirstOrDefault((x) => x.MultimediaID == id);
+                    break;
+                case "Magazine":
+                    foundObject = _db.Magazines.FirstOrDefault((x) => x.MultimediaID == id);
+                    break;
+                default:
+                    return null;
+            }
+
+            if (foundObject != null)
+            {
+                return foundObject;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void AddObject(Multimedia multimedia)
+        {         
             switch (multimedia)
             {
                 case AudioBook audioBook:
@@ -109,11 +148,171 @@ namespace LibraryMvcApp.Services
 
                 case null:
                 default:
-                    //log error
-                    break;
+                    //TODO log error
+                    return;
             }
 
             _db.SaveChanges();
+        }
+
+        public void EditObject(Multimedia multimedia)
+        {
+            switch (multimedia)
+            {
+                case AudioBook audioBook:
+                    _db.AudioBooks.AddOrUpdate(audioBook);//.FirstOrDefault((x) => x.MultimediaID == multimedia.MultimediaID); 
+                    break;
+                case Game game:
+                    _db.Games.AddOrUpdate(game);
+                    break;
+                case MusicRecord musicRecord:
+                    _db.MusicRecords.AddOrUpdate(musicRecord);
+                    break;
+                case Book book:
+                    _db.Books.AddOrUpdate(book);
+                    break;
+                case Magazine magazine:
+                    _db.Magazines.AddOrUpdate(magazine);
+                    break;
+
+                case null:
+                default:
+                    //TODO log error
+                    return;
+            }
+            
+            _db.SaveChanges();
+        }
+
+        public static string NextPossibleFilename() //TODO add semaphore/lock
+        {
+            var fileNames = Directory.GetFiles(_imagesDirectory);
+            List<int> fileNumbers = new List<int>();
+
+            foreach (var name in fileNames)
+            {
+                var fileNameNumber = Regex.Match(name, @"(\d+(?=.*(?=\.)))(?!.*?(\d*\\))");
+
+                if (int.TryParse(fileNameNumber.ToString(), out int number))
+                {
+                    fileNumbers.Add(number);
+                }
+            }
+
+            fileNumbers.Sort();
+
+            int FindLowestNumber()
+            {
+                int fileNumbersCount = fileNumbers.Count;
+
+                for (int i = 0; i < fileNumbersCount; i++)
+                {
+                    if (fileNumbers[i] != i)
+                    {
+                        return i;
+                    }
+                }
+
+                return fileNumbersCount;
+            }         
+
+            return string.Format("{0}.png", FindLowestNumber());
+        }
+
+        public void DeleteObject(int id, string className)
+        {
+            dynamic foundObject;
+
+            switch (className)
+            {
+                case "AudioBook":
+                    foundObject = _db.AudioBooks.FirstOrDefault((x) => x.MultimediaID == id); //todo select instead firstOrDefault
+                    if (foundObject != null)
+                    {
+                        _db.AudioBooks.Remove(foundObject);
+                    }
+                    break;
+                case "Game":
+                    foundObject = _db.Games.FirstOrDefault((x) => x.MultimediaID == id);
+                    if (foundObject != null)
+                    {
+                        _db.Games.Remove(foundObject);
+                    }
+                    break;
+                case "MusicRecord":
+                    foundObject = _db.MusicRecords.FirstOrDefault((x) => x.MultimediaID == id);
+                    if (foundObject != null)
+                    {
+                        _db.MusicRecords.Remove(foundObject);
+                    }
+                    break;
+                case "Book":
+                    foundObject = _db.Books.FirstOrDefault((x) => x.MultimediaID == id);
+                    if (foundObject != null)
+                    {
+                        _db.Books.Remove(foundObject);
+                    }
+                    break;
+                case "Magazine":
+                    foundObject = _db.Magazines.FirstOrDefault((x) => x.MultimediaID == id);
+                    
+                    if (foundObject != null)
+                    {
+                        _db.Magazines.Remove(foundObject);
+                    }
+                    break;
+                default:
+                    return;
+            }
+
+            TryDeleteCoverPhoto(foundObject);
+            _db.SaveChanges();
+        }
+
+        public void DeleteCoverPhoto(int id, string className)
+        {
+            dynamic foundObject;
+
+            switch (className)
+            {
+                case "AudioBook":
+                    foundObject = _db.AudioBooks.FirstOrDefault((x) => x.MultimediaID == id);
+                    break;
+                case "Game":
+                    foundObject = _db.Games.FirstOrDefault((x) => x.MultimediaID == id);
+                    break;
+                case "MusicRecord":
+                    foundObject = _db.MusicRecords.FirstOrDefault((x) => x.MultimediaID == id);
+                    break;
+                case "Book":
+                    foundObject = _db.Books.FirstOrDefault((x) => x.MultimediaID == id);
+                    break;
+                case "Magazine":
+                    foundObject = _db.Magazines.FirstOrDefault((x) => x.MultimediaID == id);
+                    break;
+                default:
+                    return;
+            }
+
+            if (foundObject != null)
+            {
+                TryDeleteCoverPhoto(foundObject);
+                ((Multimedia)foundObject).CoverPhoto = string.Empty;
+                _db.SaveChanges();
+            }          
+        }
+
+        private void TryDeleteCoverPhoto(Multimedia multimedia)
+        {
+            if (!string.IsNullOrWhiteSpace(multimedia.CoverPhoto)) 
+            {
+                string filePath = string.Format("{0}\\{1}", _imagesDirectory, multimedia.CoverPhoto);
+
+                if ((File.Exists(filePath)))
+                {
+                    File.Delete(filePath);
+                }
+            }
         }
     }
 }

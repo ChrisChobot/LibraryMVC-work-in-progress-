@@ -7,8 +7,6 @@ namespace LibraryMvcApp.Models
 {
     public class Game: ElectronicMultimedia
     {
-      //  public string GameCategory;
         public bool OverEightteenYears;
-      //  public string[] PrintScreens;
     }
 }

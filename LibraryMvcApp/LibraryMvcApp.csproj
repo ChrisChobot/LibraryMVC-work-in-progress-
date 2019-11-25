@@ -238,6 +238,10 @@
     <Compile Include="Migrations\201911220025496_littleCleanUp.designer.cs">
       <DependentUpon>201911220025496_littleCleanUp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911232227343_deleteValueTab.cs" />
+    <Compile Include="Migrations\201911232227343_deleteValueTab.designer.cs">
+      <DependentUpon>201911232227343_deleteValueTab.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Multimedia\ElectronicMultimedia\AudioBook.cs" />
     <Compile Include="Models\Multimedia\ElectronicMultimedia\Game.cs" />
@@ -260,6 +264,7 @@
     <Content Include="app\shared\services\dataService.js" />
     <Content Include="app\templates\multimedia.html" />
     <Content Include="app\templates\multimediaAdd.html" />
+    <Content Include="app\templates\multimediaEdit.html" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -311,6 +316,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
     <Folder Include="Views\Book\" />
     <Folder Include="Views\Library\" />
     <Folder Include="Views\Multimedia\" />
@@ -345,6 +351,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911220025496_littleCleanUp.resx">
       <DependentUpon>201911220025496_littleCleanUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911232227343_deleteValueTab.resx">
+      <DependentUpon>201911232227343_deleteValueTab.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
