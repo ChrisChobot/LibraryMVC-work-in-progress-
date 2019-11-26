@@ -18,6 +18,7 @@ properly manage views, with data that they show to different roles of users
 Made user profile settings
 Better sanitize input data.
 Fix bugs in editing
+clean up angular scripts
 Show toastr like notifications after action
 clean up unused references, tables in DB and files
 allowance for administrator to manage users
