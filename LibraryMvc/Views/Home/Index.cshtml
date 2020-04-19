@@ -2,6 +2,11 @@
     ViewBag.Title = "Home Page";
 }
 
-    <h2>Log in to display data</h2>
-
+@if (User.Identity.IsAuthenticated)
+{
     <ng-view></ng-view>
+}
+else
+{
+    <h2>Log in to display data</h2>
+}
