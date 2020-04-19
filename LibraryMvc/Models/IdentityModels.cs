@@ -24,8 +24,7 @@ namespace LibraryMvc.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
-
+        
         public DbSet<AudioBook> AudioBooks { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<MusicRecord> MusicRecords { get; set; }

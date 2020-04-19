@@ -1,12 +1,9 @@
 ﻿using LibraryMvc.Models;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace LibraryMvc.Services
@@ -19,7 +16,6 @@ namespace LibraryMvc.Services
         public MultimediaServices(ApplicationDbContext applicationDbContext)
         {
             _db = applicationDbContext;
-            // InsertData();
         }
 
         public void InsertData()

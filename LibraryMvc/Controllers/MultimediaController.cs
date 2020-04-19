@@ -1,18 +1,9 @@
-﻿//using LibraryMvc.Services;
-using LibraryMvc.Models;
+﻿using LibraryMvc.Models;
 using LibraryMvc.Services;
-using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text.RegularExpressions;
-using System.Web;
-//using System.Web.Http;
 using System.Web.Mvc;
 
 namespace LibraryMvc.Controllers
