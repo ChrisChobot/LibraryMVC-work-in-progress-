@@ -15,15 +15,15 @@ Uploading pictures to server
 basic login/register, with very basic authentication on methods  
 
 To be done:  
-properly manage views, with data that they show to different roles of users  
-Made user profile settings  
 Better sanitize input data.  
 Fix bugs in editing  
 clean up angular scripts  
 Show toastr like notifications after action  
-clean up unused references, tables in DB and files 
+safely naming downloaded pictures (non iteratable)  
+Tests
+
+todo optional functionalities:
+Made users profile settings  
 allowance for administrator to manage users  
 search window for multimedia  
 paging multimedia  
-safely naming downloaded pictures (non iteratable)  
-and last but definitely not least -> Tests!  
