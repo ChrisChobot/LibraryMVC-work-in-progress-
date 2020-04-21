@@ -2,8 +2,8 @@
 {
     public class Magazine : WrittenMultimedia
     {
-        string Number;
-        string Gift;
-        string GiftName;
+        public string Number { get; set; }
+        public string Gift { get; set; }
+        public string GiftName { get; set; }
     }
 }

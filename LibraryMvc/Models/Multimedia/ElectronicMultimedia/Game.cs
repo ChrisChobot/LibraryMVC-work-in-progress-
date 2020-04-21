@@ -2,6 +2,6 @@
 {
     public class Game: ElectronicMultimedia
     {
-        public string OverEightteenYears;
+        public string OverEightteenYears { get; set; }
     }
 }

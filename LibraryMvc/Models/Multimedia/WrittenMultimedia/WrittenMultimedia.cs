@@ -2,7 +2,7 @@
 {
     public abstract class WrittenMultimedia : Multimedia
     {
-        string TableOfContents;
-        int PagesCount;
+        public string TableOfContents { get; set; }
+        public int PagesCount { get; set; }
     }
 }

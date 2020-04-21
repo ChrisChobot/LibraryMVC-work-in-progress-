@@ -2,6 +2,6 @@
 {
     public class Book : WrittenMultimedia
     {
-        public string Isbn;
+        public string Isbn { get; set; }
     }
 }

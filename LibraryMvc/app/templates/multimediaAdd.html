@@ -1,17 +1,20 @@
 ﻿<h2>Create</h2>
 <form class="form-horizontal" name="frmAddMultimedia" ng-submit="createMultimedia(multimedia)" novalidate>
-    <h4>Create a new multimedia</h4>
+
     <hr />
 
     <div class="form-group" ng->
         <div class="col-lg-6">
             <!--<div class="form-group pull-right">-->
-                Show
+            <h4>
+                
+                Create
                 <label>
                     <select name="Class" ng-init="multimedia.SelectedClass = classes[0]" ng-model="multimedia.SelectedClass" ng-options="x for x in classes">
                     </select>
                 </label>
-                Entries
+                entry
+            </h4>
             <!--</div>-->
         </div>
     </div>

@@ -2,6 +2,6 @@
 {
     public class MusicRecord: ElectronicMultimedia
     {
-        public float Lenght;
+        public float Lenght { get; set; }
     }
 }

@@ -57,6 +57,7 @@
         </div>
 
         <!--electronic multimedia-->
+
         <div>
             <div ng-if="multimedia.ClassName == 'AudioBook' || multimedia.ClassName == 'Game' || multimedia.ClassName == 'MusicRecord'" class="form-group">
                 <label class="col-lg-2 control-label">Size</label>
@@ -71,9 +72,9 @@
         <div ng-if="multimedia.ClassName == 'Book' || multimedia.ClassName == 'AudioBook'" class="form-group">
             <label class="col-lg-2 control-label">ISBN</label>
             <div class="col-lg-10">
-                <input type="text" class="form-control" name="ISBN" ng-model="multimedia.ISBN" ng-maxlength="255" />
-                <span class="text-danger" ng-show="(frmEditMultimedia.ISBN.$touched || frmEditMultimedia.ISBN.$dirty) && frmEditMultimedia.ISBN.$invalid">
-                    <span ng-show="frmEditMultimedia.ISBN.$error.maxlength">ISBN must be less than or equal to 255</span>
+                <input type="text" class="form-control" name="Isbn" ng-model="multimedia.Isbn" ng-maxlength="255" />
+                <span class="text-danger" ng-show="(frmEditMultimedia.Isbn.$touched || frmEditMultimedia.Isbn.$dirty) && frmEditMultimedia.Isbn.$invalid">
+                    <span ng-show="frmEditMultimedia.Isbn.$error.maxlength">ISBN must be less than or equal to 255</span>
                 </span>
             </div>
         </div>
@@ -162,29 +163,11 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10">
+            <ng-if="">
             <input type="submit" class="btn btn-success" value="Update" />
+
             <a href="#/" class="btn btn-default">Cancel</a>
         </div>
     </div>
