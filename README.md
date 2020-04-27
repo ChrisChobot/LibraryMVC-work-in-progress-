@@ -16,7 +16,6 @@ basic login/register, with very basic authentication on methods
 
 To be done:  
 Better sanitize input data.  
-Fix bugs in editing  
 clean up angular scripts  
 Show toastr like notifications after action  
 safely naming downloaded pictures (non iteratable)  
